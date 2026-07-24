@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "owen-100days",
+  "compatibility_date": "2026-07-24",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "100days-quiz"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
