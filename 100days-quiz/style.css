@@ -1,0 +1,383 @@
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --black: #0a0a0a;
+  --panel: #131313;
+  --surface: #1a1a1a;
+  --border: #2e2e2e;
+  --border-soft: #232323;
+  --white: #f6f6f4;
+  --dim: #8a8a8a;
+  --dim-2: #565656;
+
+  --font-display: 'Noto Sans TC', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-display);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body {
+  background-image:
+    linear-gradient(var(--border-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center;
+}
+
+::selection { background: var(--white); color: var(--black); }
+
+:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   TOP PROGRESS BAR
+   ============================================================ */
+.progress-shell {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 24px;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.92), rgba(10,10,10,0));
+  backdrop-filter: blur(2px);
+}
+
+.progress-track {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: var(--white);
+  transition: width 0.5s var(--ease);
+}
+
+.progress-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  white-space: nowrap;
+}
+.progress-sep { margin: 0 3px; color: var(--dim-2); }
+
+/* ambient scan-line, purely decorative */
+/* .scan-line {
+  position: fixed;
+  left: 0; right: 0;
+  height: 120px;
+  top: -120px;
+  background: linear-gradient(to bottom, rgba(246,246,244,0.05), transparent);
+  pointer-events: none;
+  z-index: 1;
+  animation: scan 9s linear infinite;
+} */
+@keyframes scan {
+  0% { top: -120px; }
+  100% { top: 100vh; }
+}
+
+/* ============================================================
+   STAGE / SCREENS
+   ============================================================ */
+.stage {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px 80px;
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 560px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.screen.active {
+  display: flex;
+  animation: enter 0.6s var(--ease);
+}
+
+@keyframes enter {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--dim);
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  padding: 5px 10px;
+}
+
+.headline {
+  font-size: clamp(30px, 6vw, 44px);
+  line-height: 1.25;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.headline.small { font-size: clamp(24px, 5vw, 32px); }
+
+.sub {
+  color: var(--dim);
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ============================================================
+   FIELD / INPUT
+   ============================================================ */
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--dim-2);
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 17px;
+  padding: 16px 16px;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.input::placeholder { color: var(--dim-2); }
+.input:focus { border-color: var(--white); background: var(--surface); outline: none; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  --btn-fill: 0%;
+  position: relative;
+  overflow: hidden;
+  margin-top: 8px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 26px;
+  background: transparent;
+  border: 1px solid var(--white);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: color 0.35s var(--ease), border-color 0.35s var(--ease), opacity 0.3s;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--white);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+  z-index: -1;
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--black);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.btn:disabled::before { display: none; }
+
+.btn-arrow {
+  transition: transform 0.35s var(--ease);
+}
+.btn:hover .btn-arrow { transform: translateX(4px); }
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim-2);
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   QUIZ QUESTION
+   ============================================================ */
+.q-index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--dim-2);
+}
+
+.question {
+  font-size: clamp(22px, 4.4vw, 30px);
+  line-height: 1.4;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  width: 100%;
+  text-align: left;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 16px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.2s var(--ease);
+}
+
+.option:hover {
+  border-color: var(--white);
+  background: var(--surface);
+  transform: translateX(4px);
+}
+
+.option:active { transform: translateX(4px) scale(0.99); }
+
+.option-mark {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--dim-2);
+  border-radius: 50%;
+  position: relative;
+}
+.option:hover .option-mark { border-color: var(--white); }
+.option-mark::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--white);
+  transform: scale(0);
+  transition: transform 0.2s var(--ease);
+}
+.option.selected .option-mark::after { transform: scale(1); }
+
+.option.selected {
+  border-color: var(--white);
+  background: var(--surface);
+}
+
+/* fade-out lock while advancing */
+.options.locked .option { pointer-events: none; opacity: 0.5; }
+.options.locked .option.selected { opacity: 1; }
+
+/* ============================================================
+   RESULT SCREEN / REVEAL
+   ============================================================ */
+.user-tag {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  width: 100%;
+}
+
+#userTag {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.scramble-char {
+  color: var(--dim);
+}
+
+.btn-reveal {
+  border-color: var(--white);
+}
+
+/* ============================================================
+   FINAL SCREEN
+   ============================================================ */
+.final-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+  .stage { padding: 108px 18px 60px; }
+  .progress-shell { padding: 14px 16px; }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>可愛 100 天 </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="100days.css" />
+</head>
+<body>
+
+  <!-- 常駐邊框：對焦框角標 + 左側刻度線，動畫結束後保留成頁面裝飾 -->
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+  <div class="frame-tick" id="frameTick"></div>
+
+  <!-- 開場遮罩：黑底 + 對焦框從中心「放大」展開 -->
+  <div class="intro-bg" id="introBg"></div>
+
+  <main class="days-stage" id="daysStage">
+    <div class="days-content" id="daysContent">
+      <div class="eyebrow">DAY 100</div>
+      <h1 class="headline days-headline">你是 可愛型人格</h1>
+
+      <p class="sub days-sub">與小可愛的 100 天</p>
+
+      <div class="orbit-stage" id="orbitStage">
+        <div class="orbit-guide" id="orbitGuide"></div>
+        <!-- 照片元素由 100days.js 動態產生 -->
+      </div>
+    </div>
+  </main>
+
+  <script src="100days.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>戀愛人格測試 · LOVE.PROTOCOL</title>
+<meta name="description" content="用 10 道題目，解析你在關係裡的真實樣子。" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 頂部固定進度條 -->
+  <div class="progress-shell" id="progressShell" hidden>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-label">
+      <span id="progressStep">01</span><span class="progress-sep">/</span><span id="progressTotal">11</span>
+    </div>
+  </div>
+
+  <div class="scan-line"></div>
+
+  <main class="stage" id="stage">
+
+    <!-- SCREEN 0 : 開始 -->
+    <section class="screen active" data-screen="start">
+      <div class="eyebrow">LOVE PERSONALITY PROTOCOL</div>
+      <h1 class="headline">你在愛情裡<br />是什麼樣子？</h1>
+      <p class="sub">沒有標準答案，只有最真實的直覺反應。<br />誠實作答，才能得到最準確的分析。</p>
+
+      <label class="field">
+        <span class="field-label">請輸入你的暱稱</span>
+        <input type="text" id="nicknameInput1" class="input" placeholder="" maxlength="20" autocomplete="off" />
+      </label>
+
+      <button class="btn btn-primary" id="startBtn" disabled>
+        <span class="btn-text">開始測驗</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </section>
+
+    <!-- SCREEN 1 : 測驗中 -->
+    <section class="screen" data-screen="quiz">
+      <div class="q-index" id="qIndexLabel">Q01</div>
+      <h2 class="question" id="questionText">—</h2>
+      <div class="options" id="optionsWrap"></div>
+    </section>
+
+    <!-- SCREEN 2 : 測驗完成，直接沿用開始時輸入的暱稱 -->
+    <!-- <section class="screen" data-screen="analysis-gate">
+      <div class="eyebrow">ANALYSIS REQUEST</div>
+      <h2 class="headline small">測驗完成</h2>
+      <p class="sub">系統已收集你的所有回答，正在為你產生專屬分析結果。</p>
+
+      <button class="btn btn-primary" id="analysisBtn">
+        <span class="btn-text">產生分析</span>
+        <span class="btn-arrow">→</span>
+      </button>
+    </section> -->
+
+    <!-- SCREEN 3 : 分析結果 / 觸發彩蛋 -->
+    <section class="screen" data-screen="result">
+      <div class="eyebrow">ANALYSIS READY</div>
+      <h2 class="headline small">測驗完成</h2>
+      <div class="user-tag">
+        使用者：<span id="userTag">—</span>
+      </div>
+      <p class="sub">你的戀愛人格分析已經生成。<br />點擊下方按鈕，查看完整結果。</p>
+
+      <button class="btn btn-primary btn-reveal" id="resultBtn">
+        <span class="btn-text">取得分析結果</span>
+        <span class="btn-arrow">→</span>
+      </button>
+
+      <div class="hint" id="submitHint" hidden>結果傳送中…</div>
+    </section>
+
+    <!-- SCREEN 4 : 100 天（內容預留） -->
+    <section class="screen" data-screen="final">
+      <div id="finalContent" class="final-content">
+        <!-- 預留：交往 100 天慶祝內容 / 貼上動畫元素 -->
+        <div class="eyebrow">DAY 100</div>
+        <h2 class="headline">敬 100 天</h2>
+        <p class="sub">這裡即將放上屬於你們的 100 天內容。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

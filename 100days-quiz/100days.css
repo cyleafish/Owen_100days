@@ -1,0 +1,168 @@
+/* ============================================================
+   常駐對焦框角標（同時也是開場動畫的角色）
+   ============================================================ */
+.corner {
+  position: fixed;
+  width: 22px;
+  height: 22px;
+  z-index: 101;
+  transition: transform 1.15s cubic-bezier(0.65, 0, 0.35, 1);
+  pointer-events: none;
+}
+
+.corner::before,
+.corner::after {
+  content: '';
+  position: absolute;
+  background: var(--white);
+}
+
+.corner::before { width: 22px; height: 2px; }
+.corner::after { width: 2px; height: 22px; }
+
+.corner-tl {
+  top: 24px;
+  left: 24px;
+  transform: translate(calc(50vw - 35px), calc(50vh - 35px));
+}
+.corner-tl::before { top: 0; left: 0; }
+.corner-tl::after { top: 0; left: 0; }
+
+.corner-tr {
+  top: 24px;
+  right: 24px;
+  transform: translate(calc(-50vw + 35px), calc(50vh - 35px));
+}
+.corner-tr::before { top: 0; right: 0; }
+.corner-tr::after { top: 0; right: 0; }
+
+.corner-bl {
+  bottom: 24px;
+  left: 24px;
+  transform: translate(calc(50vw - 35px), calc(-50vh + 35px));
+}
+.corner-bl::before { bottom: 0; left: 0; }
+.corner-bl::after { bottom: 0; left: 0; }
+
+.corner-br {
+  bottom: 24px;
+  right: 24px;
+  transform: translate(calc(-50vw + 35px), calc(-50vh + 35px));
+}
+.corner-br::before { bottom: 0; right: 0; }
+.corner-br::after { bottom: 0; right: 0; }
+
+body.intro-expand .corner {
+  transform: translate(0, 0);
+}
+
+/* 左側刻度線裝飾，動畫結束後淡入 */
+.frame-tick {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  width: 1px;
+  height: 64px;
+  background: var(--border);
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.8s var(--ease) 0.4s;
+  z-index: 101;
+}
+body.intro-done .frame-tick { opacity: 1; }
+
+/* ============================================================
+   開場遮罩
+   ============================================================ */
+.intro-bg {
+  position: fixed;
+  inset: 0;
+  background: var(--black);
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.9s var(--ease);
+}
+body.intro-done .intro-bg {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   內容主體
+   ============================================================ */
+.days-stage {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 24px 90px;
+}
+
+.days-content {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.9s var(--ease) 0.55s, transform 0.9s var(--ease) 0.55s;
+}
+body.intro-expand .days-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.days-headline {
+  font-size: clamp(32px, 7vw, 52px);
+}
+
+.days-sub {
+  max-width: 420px;
+}
+
+/* ============================================================
+   照片輪轉軌道
+   ============================================================ */
+.orbit-stage {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  aspect-ratio: 16 / 9;
+  margin-top: 28px;
+}
+
+.orbit-guide {
+  position: absolute;
+  border: 1px dashed var(--border);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.orbit-photo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  background: var(--white);
+  padding: 6px 6px 16px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
+  will-change: transform;
+}
+
+.orbit-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1) contrast(1)sepia(0);
+  background: var(--surface);
+}
+
+@media (max-width: 480px) {
+  .orbit-stage { aspect-ratio: 4 / 5; }
+}
